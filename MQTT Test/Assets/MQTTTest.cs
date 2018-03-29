@@ -26,16 +26,18 @@ public class MQTTTest : MonoBehaviour
         string clientId = Guid.NewGuid().ToString();
         client.Connect(clientId);
 
-        // subscribe to the topic "/home/temperature" with QoS 2 
+        // subscribe to the topic "/test/hand"
         client.Subscribe(new string[] { "/test/hand" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
 
     }
     void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
     {
-            Debug.Log("Received: " + System.Text.Encoding.UTF8.GetString(e.Message));
-            dataProcessor.JSON = System.Text.Encoding.UTF8.GetString(e.Message);
+        Debug.Log("Received: " + System.Text.Encoding.UTF8.GetString(e.Message));
+        // pipe the result to the data processor
+        dataProcessor.JSON = System.Text.Encoding.UTF8.GetString(e.Message);
     }
 
+    // example for sending:
     //void OnGUI()
     //{
     //    if (GUI.Button(new Rect(20, 40, 80, 20), "Level 1"))

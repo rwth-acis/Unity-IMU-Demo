@@ -6,7 +6,7 @@ public class DataProcessor : MonoBehaviour
 {
 
     MadgwickAHRS ahrs;
-    private float lastTime;
+    // private float lastTime;
 
     public string JSON { get; set; }
 
@@ -22,10 +22,10 @@ public class DataProcessor : MonoBehaviour
 
     private void JSONToOrientation(string json)
     {
-        float deltaTime = Time.time - lastTime;
-        lastTime = Time.time;
-        SensorData data = JsonUtility.FromJson<SensorData>(json);
-        if (data != null)
+        // float deltaTime = Time.time - lastTime;
+        // lastTime = Time.time;
+        SensorData data = JsonUtility.FromJson<SensorData>(json); // deserialize JSON data
+        if (data != null) // if serialization successful => pipe to AHRS algorithm
         {
             ahrs.accelerometer = data.accelerometer.ToVector();
             ahrs.magnetsensor = data.magnetometer.ToVector();
@@ -35,7 +35,7 @@ public class DataProcessor : MonoBehaviour
                 data.gyroscope.z * Mathf.Deg2Rad
                 );
 
-            //ahrs.samplePeriod = deltaTime;
+            //ahrs.samplePeriod = deltaTime; // time components could be used to adapt the sample rate
         }
     }
 }

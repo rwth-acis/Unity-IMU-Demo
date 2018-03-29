@@ -14,17 +14,23 @@ public class MadgwickAHRS : MonoBehaviour
 
     Quaternion quat = new Quaternion(1, 0, 0, 0);
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
     private void Update()
     {
         UpdateQuaternion(gyroscope.x, gyroscope.y, gyroscope.z, accelerometer.x, accelerometer.y, accelerometer.z, magnetsensor.x, magnetsensor.y, magnetsensor.z);
     }
 
+    /// <summary>
+    /// algorithm modified from https://github.com/xioTechnologies/Open-Source-AHRS-With-x-IMU
+    /// </summary>
+    /// <param name="gx">gyrosope x</param>
+    /// <param name="gy">gyroscope y</param>
+    /// <param name="gz">gyrosope z</param>
+    /// <param name="ax">accelerator x</param>
+    /// <param name="ay">accelerator y</param>
+    /// <param name="az">accelerator z</param>
+    /// <param name="mx">magnetometer x</param>
+    /// <param name="my">magnetometer y</param>
+    /// <param name="mz">magnetometer z</param>
     public void UpdateQuaternion(float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz)
     {
         // store quaternion values
@@ -118,11 +124,11 @@ public class MadgwickAHRS : MonoBehaviour
 
         Vector3 eulerRot = Quaternion.Inverse(quat).eulerAngles;
 
-        //transform.rotation = Quaternion.Inverse(quat);
+        //transform.rotation = Quaternion.Inverse(quat); // this version seems to be most precise but has the rotation axes mixed up
 
-        //transform.localEulerAngles = new Vector3(0, 180, 180 - eulerRot.x);
-        //transform.localEulerAngles = new Vector3(eulerRot.z, 0, 0);
-        // transform.localEulerAngles = new Vector3(eulerRot.z, 0, - eulerRot.x);
-        transform.localEulerAngles = new Vector3(eulerRot.z, 180 - eulerRot.y, -eulerRot.x);
+        //transform.localEulerAngles = new Vector3(0, 180, 180 - eulerRot.x); // restriction to z-axis rotation
+        //transform.localEulerAngles = new Vector3(eulerRot.z, 0, 0); // restriction to x-axis rotation
+        // transform.localEulerAngles = new Vector3(eulerRot.z, 0, - eulerRot.x); // x and z axis rotation
+        transform.localEulerAngles = new Vector3(eulerRot.z, 180 - eulerRot.y, -eulerRot.x); // free rotation with corrected axes
     }
 }
