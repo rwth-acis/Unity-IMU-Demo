@@ -13,6 +13,7 @@ The MQTT Client uses [this](https://github.com/eclipse/paho.mqtt.m2mqtt) library
 
 > The other projects might display warnings for missing components and references but there is no need to install additional components for them since they are not used.
 3. Open the *Properties* of the .NET Project and under *Application* set the Target Framework to 3.5
+
 ![Properties settings](/Documentation/Images/TargetFramework.png)
 
 5. Build the two projects
@@ -28,8 +29,10 @@ The DLLs are imported as Plugins. Plugins need to be placed in the folder `Asset
 1. Create the folder `Assets/Plugins` in the Unity project.
 2. Copy the file `M2Mqtt.Net.dll` into the created folder.
 3. Open the Unity Editor, navigate to the copied file and change its settings in Unity's Inspector to *Editor*.
+
 ![.NET dll settings](/Documentation/Images/M2MQTT_NetSettings.png)
 4. In the Plugins folder, create a subfolder named `WSA`.
 5. Copy the file `M2Mqtt.WinRT.dll` to this new subfolder.
 6. In Unity's Editor change the settings of the dll in the Inspector to *WSAPlayer*.
+
 ![.NET dll settings](/Documentation/Images/M2MQTT_WinRTSettings.png)
